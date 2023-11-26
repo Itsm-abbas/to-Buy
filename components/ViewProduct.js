@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Image from "next/image";
-import reviewsData from "../utils/reviews";
+import { fetchReviewsAll } from "../utils/api";
+import { useQuery } from "react-query";
 import Rating from "@mui/material/Rating";
+import Loader from "./Loader";
 const ViewProduct = ({ product }) => {
-  const { id, image, title, price, brand, desc, reviews, category, newprice } =
+  const { product_id, image, title, price, brand, desc, category, newprice } =
     product;
   const [inWishList, setinWishList] = useState(false);
-  const ProductReviews = reviewsData.filter((p) => {
-    return p.id === id;
+  // Fetching Reviews
+  const {
+    data: reviews,
+    isLoading: loadingReviews,
+    error: reviewsError,
+  } = useQuery("reviews", fetchReviewsAll);
+  const ProductReviews = reviews?.filter((p) => {
+    return p.product_id === product_id;
   });
-  const totalRating = ProductReviews.reduce(
-    (sum, review) => sum + review?.stars,
+
+  const totalRating = ProductReviews?.reduce(
+    (sum, review) => sum + review.stars,
     0
   );
-  const averageRating = totalRating / ProductReviews.length;
-  const rendered = [];
+  const averageRating = totalRating / ProductReviews?.length;
 
   const numberWithCommas = (number) => {
     return number?.toLocaleString();
@@ -28,10 +36,12 @@ const ViewProduct = ({ product }) => {
         <div className="lg:w-11/12 mx-auto flex flex-wrap ">
           <Image
             alt="ecommerce"
-            height={400}
-            width={400}
-            className="lg:w-1/2 w-full lg:h-96 h-64 object-cover object-center rounded"
+            height={800}
+            width={500}
+            className="lg:w-1/2 w-full lg:h-96 h-64 object-cover  rounded"
             src={image}
+            priority
+            blurDataURL="blur"
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 flex flex-col justify-between">
             <div>
@@ -43,7 +53,6 @@ const ViewProduct = ({ product }) => {
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
-                  {rendered}
                   <span className="text-gray-600 flex items-center">
                     {/* Rating Stars */}
                     <Rating

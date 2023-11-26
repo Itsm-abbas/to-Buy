@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import { FaBars, FaTimes, FaShoppingCart, FaRegUser } from "react-icons/fa";
-import { category } from "../utils/products";
+import { fetchCatogories } from "../utils/api";
+import { useQuery } from "react-query";
 import SearchBar from "./SearchBar";
 import { FaChevronDown } from "react-icons/fa";
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const {
+    data: categories,
+    isLoading: loadingCategory,
+    error: categoryError,
+  } = useQuery("categories", fetchCatogories);
   const handleMouseEnter = () => {
     setIsDropdownOpen(true);
   };
@@ -20,7 +25,7 @@ function Nav() {
 
   return (
     <div className="sticky top-0 left-0 right-0 z-30">
-      <nav className="bg-white text-black shadow-md dark:bg-gray-700 dark:text-white">
+      <nav className="bg-white text-black shadow-md md:bg-red dark:bg-gray-700 dark:text-white">
         <div className="max-w-7xl mx-auto px-4 md:px-6 ">
           <div className="flex items-center justify-between h-16 gap-20">
             <div className="flex items-center">
@@ -71,8 +76,8 @@ function Nav() {
                 {isDropdownOpen && (
                   <div className="absolute w-full md:w-40 border border-gray-300  bg-white rounded-md shadow-lg">
                     <ul className="py-2">
-                      {category.map((category) => (
-                        <Link href={`/products/${category}`} key={category}>
+                      {categories?.map((category) => (
+                        <Link href={`/productslist/${category}`} key={category}>
                           <li className="px-4 py-2 cursor-pointer text-black hover:bg-gray-200">
                             {category}
                           </li>

@@ -1,11 +1,16 @@
-// components/SearchBar.js
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { category } from "../utils/products";
+import { fetchCatogories } from "../utils/api";
+import { useQuery } from "react-query";
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
+  const {
+    data: categories,
+    isLoading: loadingCategory,
+    error: categoryError,
+  } = useQuery("categories", fetchCatogories);
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -25,7 +30,7 @@ const SearchBar = () => {
     // Navigate to the search page with the selected category
     router.push(`/search/${encodeURIComponent(category)}`);
   };
-  const filteredCategories = category.filter((category) =>
+  const filteredCategories = categories?.filter((category) =>
     category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 

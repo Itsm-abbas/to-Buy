@@ -1,23 +1,36 @@
 import Link from "next/link";
-import reviewsData from "../utils/reviews";
 import Rating from "@mui/material/Rating";
-const ProductCard = ({ product }) => {
-  const { id, image, slug, title, price, newprice } = product;
+import { useQuery } from "react-query";
+import { fetchReviewsAll } from "../utils/api";
+const ProductCard = ({ product, isLoading }) => {
+  // Fetching Reviews
+  const {
+    data: reviews,
+    isLoading: loadingReviews,
+    error: reviewsError,
+  } = useQuery("reviews", fetchReviewsAll);
+  const { product_id, image, slug, title, price, newprice } = product;
+  // Formatting the number with comma
   const numberWithCommas = (number) => {
     return number?.toLocaleString();
   };
-  const ProductReviews = reviewsData.filter((p) => {
-    return p.id === id;
+  // Filtering reviews
+  const ProductReviews = reviews?.filter((p) => {
+    return p.product_id === product_id;
   });
-  const totalRating = ProductReviews.reduce(
+  // Total number of rating stars
+  const totalRating = ProductReviews?.reduce(
     (sum, review) => sum + review?.stars,
     0
   );
-  const averageRating = totalRating / ProductReviews.length;
-
+  // Finding the average of reviews
+  const averageRating = totalRating / ProductReviews?.length;
+  console.log("Average " + averageRating);
+  console.log("Total Rating " + totalRating);
+  console.log(ProductReviews);
   const offPercentage = 100 - Math.floor((newprice / price) * 100);
   return (
-    <div key={id} className="">
+    <div key={product_id}>
       <Link href={`product/${slug}`}>
         <div className="relative overflow-hidden bg-white p-3 pb-10 rounded shadow-md group">
           <img
@@ -65,13 +78,6 @@ const ProductCard = ({ product }) => {
               )}
             </div>
           </p>
-          {/* <p className="text-gray-600 ">
-            Rs{" "}
-            <span className={`${newprice && "line-through"}`}>
-              {numberWithCommas(price)}
-            </span>{" "}
-            {newprice && numberWithCommas(newprice)}
-          </p> */}
         </div>
       </Link>
     </div>

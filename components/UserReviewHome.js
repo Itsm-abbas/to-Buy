@@ -1,25 +1,25 @@
 import reviewsData from "../utils/reviews";
 import Rating from "@mui/material/Rating";
 const UserReviewHome = ({
-  name,
-  location,
-  comment,
-  id,
+  review_id,
+  user_name,
+  user_location,
+  user_comment,
   stars,
-  image,
-  productImage,
+  user_image,
+  product_image,
 }) => {
   return (
     <div className="max-w-md  bg-white p-6 rounded-md shadow-md mb-2">
       <div className="flex items-center mb-4">
         <img
-          src={image}
-          alt={`${name}'s Profile`}
+          src={user_image}
+          alt={`${user_name}'s Profile`}
           className="w-12 h-12 object-cover rounded-full mr-4"
         />
         <div>
-          <h3 className="text-lg font-semibold">{name}</h3>
-          <p className="text-gray-500">{location}</p>
+          <h3 className="text-lg font-semibold">{user_name}</h3>
+          <p className="text-gray-500">{user_location}</p>
         </div>
       </div>
       <div className="mb-4">
@@ -41,12 +41,12 @@ const UserReviewHome = ({
       <div className="mb-4">
         {/* Display product image */}
         <img
-          src={productImage}
-          alt="Product Image"
-          className="w-full h-32 object-cover mb-4 rounded"
+          src={product_image}
+          alt={review_id}
+          className="w-full h-36 object-cover mb-4 rounded"
         />
       </div>
-      <p className="text-gray-700 text-sm mb-4 ">{comment}</p>
+      <p className="text-gray-700 text-sm mb-4 ">{user_comment}</p>
     </div>
   );
 };

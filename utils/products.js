@@ -253,6 +253,6 @@ const products = [
     category: "Sports",
   },
 ];
-export const category = ["Laptop", "Shirts", "Sports", "Shoes"];
+export const categories = ["Laptops", "Shirts", "Sports", "Shoes"];
 
 export default products;

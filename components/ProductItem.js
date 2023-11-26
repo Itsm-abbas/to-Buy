@@ -1,14 +1,31 @@
 import Image from "next/legacy/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { fetchReviewsAll } from "../utils/api";
+import { useQuery } from "react-query";
+import Rating from "@mui/material/Rating";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 const ProductItem = ({ product }) => {
-  const { id, image, slug, title, price, category, newprice } = product;
+  const { product_id, image, slug, title, price, category, newprice } = product;
   const [inWishList, setinWishList] = useState(false);
+  const {
+    data: reviews,
+    isLoading: loadingReviews,
+    error: reviewsError,
+  } = useQuery("reviews", fetchReviewsAll);
+  const ProductReviews = reviews?.filter((p) => {
+    return p.product_id === product_id;
+  });
+
+  const totalRating = ProductReviews?.reduce(
+    (sum, review) => sum + review.stars,
+    0
+  );
+  const averageRating = totalRating / ProductReviews?.length;
   const numberWithCommas = (number) => {
     return number.toLocaleString();
   };
-  const offPercentage = Math.floor((newprice / price) * 100);
+  const offPercentage = 100 - Math.floor((newprice / price) * 100);
   return (
     <>
       <div className="relative bg-white p-3 rounded-md pb-5">
@@ -35,6 +52,7 @@ const ProductItem = ({ product }) => {
             <p className="text-gray-900 title-font text-lg font-medium">
               {title}
             </p>
+
             {inWishList ? (
               <button
                 onClick={() => setinWishList(!inWishList)}
@@ -50,6 +68,17 @@ const ProductItem = ({ product }) => {
                 <FaRegHeart />
               </button>
             )}
+          </div>
+          <div className="flex items-center mb-3">
+            {/* Rating Stars */}
+            <Rating
+              size="small"
+              value={averageRating}
+              precision={0.1}
+              readOnly
+              className="mr-2"
+            />
+            <span className="text-sm">({ProductReviews?.length}) </span>
           </div>
           <p className=" title-font font-medium text-gray-900 text-base flex items-center gap-2 ">
             Rs.{" "}

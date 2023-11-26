@@ -1,24 +1,16 @@
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaArrowRight } from "react-icons/fa";
+import { AiOutlineBars } from "react-icons/ai";
 import Slider from "react-slick";
-import {
-  faBaseball,
-  faMobileAlt,
-  faTshirt,
-  faHome,
-  faPersonDress,
-  faPerson,
-} from "@fortawesome/free-solid-svg-icons";
+import { fetchCatogories } from "../utils/api";
+import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
 const HeroSection = () => {
-  const categories = [
-    { name: "Electronics", slug: "electronics", icon: faMobileAlt },
-    { name: "Men's fashion", slug: "clothing", icon: faPerson },
-    { name: "Women's fashion", slug: "clothing", icon: faPersonDress },
-    { name: "Home & Lifestyle", slug: "home-and-lifestyle", icon: faHome },
-    { name: "Sports", slug: "sports", icon: faBaseball },
-    // Add more categories as needed
-  ];
+  const {
+    data: categories,
+    isLoading: loadingCategory,
+    error: categoryError,
+  } = useQuery("categories", fetchCatogories);
   const Bannerimages = [
     {
       image: "banners/banner1.jpg",
@@ -32,7 +24,7 @@ const HeroSection = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setSlideIndex((prevIndex) => (prevIndex + 1) % categories.length);
+      setSlideIndex((prevIndex) => (prevIndex + 1) % categories?.length);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -69,22 +61,21 @@ const HeroSection = () => {
         </Slider>
       </div>
       {/* Categories Sidebar */}
-      <div className="w-1/4 p-8 bg-white rounded-md mr-4 shadow-sm">
-        <h2 className="text-xl font-bold mb-4">Product Categories</h2>
+      <div className="w-1/4 p-8 bg-white rounded-md mr-4 shadow-sm montserrat">
+        <div className="text-xl font-bold mb-4 flex gap-2 items-center px-2">
+          <AiOutlineBars className="mr-1" />
+          Categories
+        </div>
         <ul>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Link
-              href={`/category/${category.slug}`}
+              href={`/productslist/${category}`}
               legacyBehavior
-              key={category.slug}
+              key={category}
             >
-              <li className=" flex items-center hover:bg-gray-500 hover:text-white group rounded-md p-1 cursor-pointer">
-                <FontAwesomeIcon
-                  icon={category.icon}
-                  className="mr-2 text-blue-500 w-5 group-hover:text-white"
-                />
-
-                <p>{category.name}</p>
+              <li className=" flex items-center gap-4 hover:bg-gray-500 hover:text-white group rounded-md p-1 cursor-pointer px-3 font-medium">
+                <FaArrowRight className="text-sm" />
+                <p>{category}</p>
               </li>
             </Link>
           ))}

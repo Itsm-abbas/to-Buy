@@ -10,17 +10,6 @@ const reviews = [
     productImage:
       "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
   },
-  {
-    id: 7,
-    name: "Huzaifa",
-    location: "Swabi Pakistan",
-    comment:
-      "I recently purchased a pair of shoes, and I couldn't be happier with my choice! These shoes are not only stylish but also incredibly comfortable.",
-    stars: 3.5,
-    image: "/images/muser.png",
-    productImage:
-      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
-  },
 
   {
     id: 8,
