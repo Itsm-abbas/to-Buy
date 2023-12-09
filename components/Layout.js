@@ -8,7 +8,7 @@ const Layout = ({ children, title }) => {
         <title>{title ? title + " - toBuy" : "toBuy"}</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <div className="flex flex-col justify-between ">
+      <div className="flex flex-col justify-between">
         <Header />
         <main className="p-4 md:p-8 flex-1 bg-gray-300">{children}</main>
         <Footer />

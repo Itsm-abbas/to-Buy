@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  AddToCart,
+  AddToWishlist,
+  RemoveFromWishlist,
+} from "../redux/Cart/cart.actions";
 import Image from "next/image";
 import { fetchReviewsAll } from "../utils/api";
 import { useQuery } from "react-query";
 import Rating from "@mui/material/Rating";
-import Loader from "./Loader";
+import { ToastContainer } from "react-toastify";
 const ViewProduct = ({ product }) => {
   const { product_id, image, title, price, brand, desc, category, newprice } =
     product;
-  const [inWishList, setinWishList] = useState(false);
+  const dispatch = useDispatch();
+  const WishList = useSelector((state) => state.Cart.wishList);
+  const InWishList = WishList.some((item) => item.product_id === product_id);
   // Fetching Reviews
   const {
     data: reviews,
@@ -32,6 +40,16 @@ const ViewProduct = ({ product }) => {
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="container px-5 py-16 mx-auto">
         <div className="lg:w-11/12 mx-auto flex flex-wrap ">
           <Image
@@ -154,21 +172,21 @@ const ViewProduct = ({ product }) => {
                 </div>
               </p>
               <button
-                onClick={() => {}}
+                onClick={() => dispatch(AddToCart(product_id))}
                 className=" ml-auto text-white bg-gray-700 py-2 px-6 focus:outline-none hover:bg-gray-600"
               >
                 Add to Cart
               </button>
-              {inWishList ? (
+              {InWishList ? (
                 <button
-                  onClick={() => setinWishList(!inWishList)}
+                  onClick={() => dispatch(RemoveFromWishlist(product_id))}
                   className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
                 >
                   <FaHeart />
                 </button>
               ) : (
                 <button
-                  onClick={() => setinWishList(!inWishList)}
+                  onClick={() => dispatch(AddToWishlist(product_id))}
                   className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
                 >
                   <FaRegHeart />

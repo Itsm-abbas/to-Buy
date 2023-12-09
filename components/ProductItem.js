@@ -1,13 +1,18 @@
 import Image from "next/legacy/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { fetchReviewsAll } from "../utils/api";
 import { useQuery } from "react-query";
 import Rating from "@mui/material/Rating";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { AddToWishlist, RemoveFromWishlist } from "../redux/Cart/cart.actions";
 const ProductItem = ({ product }) => {
   const { product_id, image, slug, title, price, category, newprice } = product;
-  const [inWishList, setinWishList] = useState(false);
+  const dispatch = useDispatch();
+  const List = useSelector((state) => state.Cart.wishList);
+  const InWishList = List.some((item) => item.product_id === product_id);
+
   const {
     data: reviews,
     isLoading: loadingReviews,
@@ -53,16 +58,16 @@ const ProductItem = ({ product }) => {
               {title}
             </p>
 
-            {inWishList ? (
+            {InWishList ? (
               <button
-                onClick={() => setinWishList(!inWishList)}
+                onClick={() => dispatch(RemoveFromWishlist(product_id))}
                 className="text-2xl"
               >
                 <FaHeart />
               </button>
             ) : (
               <button
-                onClick={() => setinWishList(!inWishList)}
+                onClick={() => dispatch(AddToWishlist(product_id))}
                 className="text-2xl"
               >
                 <FaRegHeart />

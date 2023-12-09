@@ -3,6 +3,7 @@ const fetchProducts = async () => {
   const response = await axios.get("/api/products");
   return response.data.data;
 };
+
 const fetchCatogories = async () => {
   const response = await axios.get("/api/products");
   const data = response.data.data;

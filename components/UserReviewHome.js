@@ -1,4 +1,3 @@
-import reviewsData from "../utils/reviews";
 import Rating from "@mui/material/Rating";
 const UserReviewHome = ({
   review_id,

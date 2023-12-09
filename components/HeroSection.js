@@ -40,8 +40,8 @@ const HeroSection = () => {
     arrows: false,
   };
   return (
-    <div className="flex flex-row-reverse pb-12">
-      <div className="w-3/4 ">
+    <div className="flex flex-col md:flex-row-reverse pb-6 md:pb-12">
+      <div className="w-full md:w-3/4 mb-10 md:mb-0">
         <Slider {...sliderSettings}>
           {Bannerimages.map((item, index) => {
             return (
@@ -61,8 +61,8 @@ const HeroSection = () => {
         </Slider>
       </div>
       {/* Categories Sidebar */}
-      <div className="w-1/4 p-8 bg-white rounded-md mr-4 shadow-sm montserrat">
-        <div className="text-xl font-bold mb-4 flex gap-2 items-center px-2">
+      <div className="w-full md:w-1/4 p-4 md:p-8 bg-white rounded-md mr-4 shadow-sm montserrat">
+        <div className="text-lg md:text-xl font-bold mb-4 flex gap-2 items-center px-2">
           <AiOutlineBars className="mr-1" />
           Categories
         </div>
@@ -73,7 +73,7 @@ const HeroSection = () => {
               legacyBehavior
               key={category}
             >
-              <li className=" flex items-center gap-4 hover:bg-gray-500 hover:text-white group rounded-md p-1 cursor-pointer px-3 font-medium">
+              <li className="flex items-center gap-4 hover:bg-gray-500 hover:text-white group rounded-md p-1 cursor-pointer px-3 font-medium text-sm md:text-base">
                 <FaArrowRight className="text-sm" />
                 <p>{category}</p>
               </li>

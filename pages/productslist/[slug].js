@@ -17,13 +17,12 @@ const ProductsList = () => {
     error: productsError,
   } = useQuery("products", fetchProducts);
   const uniqueCategories = Array.from(
-    new Set(products.map((product) => product.category))
+    new Set(products?.map((product) => product.category))
   );
   const filteredProducts = products?.filter((item) => item.category === slug);
-  console.log(filteredProducts);
   return (
     <Layout>
-      <div className="flex flex-col gap-7 md:flex-row">
+      <div className="flex flex-col gap-7 md:flex-row pt-3 pb-20">
         {/* Categories Sidebar */}
         <div className="p-4 md:border-r-2 w-full  lg:w-1/4  montserrat font-medium ">
           <div className="text-xl font-bold mb-4 flex gap-2 items-center px-2">

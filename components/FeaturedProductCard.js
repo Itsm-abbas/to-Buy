@@ -25,9 +25,6 @@ const ProductCard = ({ product, isLoading }) => {
   );
   // Finding the average of reviews
   const averageRating = totalRating / ProductReviews?.length;
-  console.log("Average " + averageRating);
-  console.log("Total Rating " + totalRating);
-  console.log(ProductReviews);
   const offPercentage = 100 - Math.floor((newprice / price) * 100);
   return (
     <div key={product_id}>

@@ -35,7 +35,9 @@ const FeaturedProducts = ({ productsData, isLoading }) => {
   );
   return (
     <div className="container mx-auto my-12">
-      <h2 className="text-3xl font-semibold mb-6">Featured Products</h2>
+      <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+        Featured Products
+      </h2>
       {isLoading && <Loader />}
       {productsData?.length > 3 && (
         <Slider {...sliderSettings}>
