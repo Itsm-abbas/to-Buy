@@ -8,9 +8,22 @@ export default async function handler(req, res) {
     const { full_name, email, password } = req.body;
 
     // Hash the password
-    const hashedPassword = await hash(password, 20);
+    const hashedPassword = await hash(password, 10);
 
     try {
+      // Check if user with the same email already exists
+      const existingUser = await connection.query(
+        "SELECT * FROM users WHERE email = ?",
+        [email]
+      );
+
+      if (existingUser[0]?.length > 0) {
+        return res.status(409).json({
+          success: false,
+          message: "User already exists",
+        });
+      }
+
       // Insert user data into the database
       const result = await connection.query(
         "INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)",

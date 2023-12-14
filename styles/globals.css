@@ -30,29 +30,3 @@ a {
 }
 
 /* Loader */
-.loader-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: full;
-  width: 100%
-}
-
-.loader {
-  border: 7px solid #f3f3f3;
-  border-top: 7px solid rgb(55 65 81 / 1);
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}

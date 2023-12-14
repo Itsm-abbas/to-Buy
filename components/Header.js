@@ -8,12 +8,15 @@ import SearchBar from "./SearchBar";
 import { FaChevronDown } from "react-icons/fa";
 import Badge from "@mui/material/Badge";
 import { useSelector, useDispatch } from "react-redux";
+import DropDown from "./UserDropdown";
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const cart = useSelector((state) => state.Cart.cart);
   const wishList = useSelector((state) => state.Cart.wishList);
+  const IsLoggedIn = useSelector((state) => state.User.isLoggedIn);
+  const user = useSelector((state) => state.User.user);
   const {
     data: categories,
     isLoading: loadingCategory,
@@ -49,27 +52,6 @@ function Nav() {
                   </div>
                 </Link>
               </div>
-              {/* <div className="hidden md:block">
-                <div className="ml-20 flex items-baseline space-x-4 montserrat">
-                  <Link href={"/"} legacyBehavior>
-                    <a className="dark:hover:bg-white dark:hover:text-black  hover:bg-gray-700 hover:text-white  block px-3 py-2 rounded-md text-base font-medium">
-                      Home
-                    </a>
-                  </Link>
-
-                  <Link href={"/about"} legacyBehavior>
-                    <a className=" dark:hover:bg-white dark:hover:text-black  hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                      About
-                    </a>
-                  </Link>
-
-                  <Link href={"/contact"} legacyBehavior>
-                    <a className=" dark:hover:bg-white dark:hover:text-black  hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                      Contact
-                    </a>
-                  </Link>
-                </div>
-              </div> */}
             </div>
             <div className="flex items-center flex-grow gap-10">
               {/* Categories Dropdown */}
@@ -111,11 +93,17 @@ function Nav() {
             </div>
             <div className=" flex items-center">
               <div className="md:flex items-center justify-center hidden">
-                <Link href={"/login-register"} legacyBehavior>
-                  <button className="relative  flex items-center  dark:hover:bg-white dark:hover:text-black  hover:bg-gray-700 hover:text-white px-3 py-2 md:mr-6 rounded-md text-base font-medium">
-                    <FaRegUser className="text-xl md:text-2xl" />
+                {IsLoggedIn ? (
+                  <button className="hidden sm:flex mr-5">
+                    <DropDown />
                   </button>
-                </Link>
+                ) : (
+                  <Link href={"/login-register"}>
+                    <button className="relative  flex items-center  dark:hover:bg-white dark:hover:text-black  hover:bg-gray-700 hover:text-white px-3 py-2 md:mr-6 rounded-md text-base font-medium">
+                      <FaRegUser className="text-xl md:text-2xl" />
+                    </button>
+                  </Link>
+                )}
               </div>
 
               <Link href={"/cart"} legacyBehavior>

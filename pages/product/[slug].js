@@ -7,7 +7,7 @@ import ProductItem from "../../components/ProductItem";
 import UserReviewProduct from "../../components/UserReviewProduct";
 import { fetchProducts, fetchReviewsAll } from "../../utils/api";
 import { useQuery } from "react-query";
-import Loader from "../../components/Loader";
+import Loader from "../../components/MainLoader";
 
 const Product = () => {
   const router = useRouter();

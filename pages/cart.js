@@ -15,7 +15,6 @@ const Cart = () => {
   // Fetching from redux
   const CartItems = useSelector((state) => state.Cart.cart);
 
-  //   let isLoggedIn = useSelector((state) => state.User.isLoggedIn);
   const [cartItems, setCartItems] = useState(0);
   const [total, setTotal] = useState(0);
 
@@ -30,10 +29,6 @@ const Cart = () => {
   };
   // Handle cart from redux
   useEffect(() => {
-    // if (!isLoggedIn) {
-    //   alert("You have to logged in first");
-    //   router.push("/login-register");
-    // }
     let count = 0;
     let total = 0;
     CartItems.forEach((item) => {
@@ -48,14 +43,14 @@ const Cart = () => {
     <Layout title="Cart">
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={1000}
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        limit={1}
+        limit={3}
       />
       <section className="flex justify-center items-center flex-col w-full">
-        <h1 className="text-3xl font-bold mb-16">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold mb-16 montserrat">Shopping Cart</h1>
 
         {CartItems.length > 0 ? (
           <div className="overflow-auto  sm:rounded-lg w-full">
@@ -85,7 +80,7 @@ const Cart = () => {
                     <>
                       <tr
                         key={Math.random() * 10000}
-                        className="border-b even:bg-gray-50 "
+                        className="border-b-8  bg-gray-50 "
                       >
                         <td
                           scope="row"
@@ -185,7 +180,7 @@ const Cart = () => {
                 </div>
                 <div className="w-full"></div>
                 <Link href={"/checkout"}>
-                  <button className="w-full h-10 mt-12 p-2.5 text-white bg-gray-700 hover:bg-gray-600">
+                  <button className="w-full rounded-sm opensans mt-12 p-2.5 text-white bg-gray-700 hover:bg-gray-600">
                     Procceed to Checkout
                   </button>
                 </Link>

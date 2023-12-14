@@ -10,7 +10,9 @@ const Layout = ({ children, title }) => {
       </Head>
       <div className="flex flex-col justify-between">
         <Header />
-        <main className="p-4 md:p-8 flex-1 bg-gray-300">{children}</main>
+        <main className="p-4 md:p-8 flex-1 bg-gray-300 min-h-screen">
+          {children}
+        </main>
         <Footer />
       </div>
     </>

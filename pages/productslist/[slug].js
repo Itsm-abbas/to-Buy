@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
 import { fetchProducts } from "../../utils/api";
 import { useQuery } from "react-query";
-import Loader from "../../components/Loader";
+import Loader from "../../components/MainLoader";
 import ProductItem from "../../components/ProductItem";
 import { AiOutlineBars } from "react-icons/ai";
 const ProductsList = () => {
@@ -45,7 +45,7 @@ const ProductsList = () => {
           </ul>
         </div>
         {loadingProducts && (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center flex-1">
             <Loader />
           </div>
         )}

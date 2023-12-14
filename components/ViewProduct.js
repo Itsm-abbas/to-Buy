@@ -42,7 +42,7 @@ const ViewProduct = ({ product }) => {
     <section className="text-gray-600 body-font overflow-hidden">
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1000}
         newestOnTop={false}
         closeOnClick
         rtl={false}

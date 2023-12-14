@@ -23,7 +23,7 @@ export const userReducer = (state = intitialState, action) => {
         isLoggedIn: false,
       };
     case UPDATE_USER:
-      Cookies.set("user", JSON.stringify(action.payload));
+      Cookies.set("userchange", JSON.stringify(action.payload));
       return {
         ...state,
         user: action.payload,

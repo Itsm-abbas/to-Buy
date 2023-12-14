@@ -11,23 +11,19 @@ export default async function handler(req, res) {
         "SELECT * FROM users WHERE email = ?",
         [req.body.email]
       );
-
-      if (result?.length > 0) {
+      if (result[0]?.length > 0) {
         const user = result[0];
-        console.log(user);
-        const passwordMatch = await compare(
-          req.body.password,
-          user[0].password
-        );
+        const hashedPassword = user[0]?.password;
+        // Decrypt
+        const passwordMatch = await compare(req.body.password, hashedPassword); //True or false
         if (passwordMatch) {
-          res.status(200).json({ success: true, message: "Login successful" });
+          res.status(200).send(user);
         } else {
           res
             .status(401)
             .json({ success: false, message: "Invalid credentials" });
         }
       } else {
-        console.log("user not found");
         res.status(404).json({ success: false, message: "User not found" });
       }
     } catch (error) {
@@ -35,6 +31,10 @@ export default async function handler(req, res) {
       res
         .status(500)
         .json({ success: false, message: "Internal server error" });
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
   } else {
     res.status(405).json({ success: false, message: "Method Not Allowed" });

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -8,14 +9,16 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/User/user.actions";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Loader from "../components/Loader";
+import Loader from "../components/DotsLoader";
 import Cookies from "js-cookie";
 const LoginRegister = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [showRegister, setRegister] = useState(false);
   const [password, setPassword] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
+  const [showPasswordLogin, setShowPasswordLogin] = useState(false);
   const [loader, setLoader] = useState({
     register: false,
     login: false,
@@ -32,7 +35,7 @@ const LoginRegister = () => {
   if (validatePassword === password) {
     validate = true;
   }
-
+  // Register Handler
   const RegisterSubmit = (data) => {
     setLoader({ ...loader, register: true });
     if (validate) {
@@ -52,6 +55,7 @@ const LoginRegister = () => {
       toast.error("Password not match");
     }
   };
+  // Login Handler
   const LoginSubmit = (data) => {
     setLoader({
       ...loader,
@@ -98,13 +102,13 @@ const LoginRegister = () => {
         rtl={false}
         limit={1}
       />
-      <div className="container px-2 md:px-6 py-12 h-full">
+      <div className="container px-2 md:px-6 pb-12 h-full">
         <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-          <div className="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
+          <div className="hidden md:block md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+              src="/images/authentication.svg"
               className="w-full"
-              alt="Phone image"
+              alt="authentication"
             />
           </div>
           <div className="w-full md:w-8/12 lg:w-5/12 lg:ml-20">
@@ -122,7 +126,8 @@ const LoginRegister = () => {
                     <input
                       type="text"
                       className={`${
-                        errors?.name?.type === "required" && "border-red-800"
+                        errors?.full_name?.type === "required" &&
+                        "border-red-800"
                       } form-control block w-full px-4 py-2 text-lg md:text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none`}
                       placeholder="Full Name"
                       {...register("full_name", { required: true })}
@@ -139,9 +144,9 @@ const LoginRegister = () => {
                     />
                   </div>
 
-                  <div className="mb-6">
+                  <div className="mb-6 relative">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       className={`${
                         errors?.password?.type === "required" &&
                         "border-red-800"
@@ -158,10 +163,16 @@ const LoginRegister = () => {
                         Password must be at least 6 characters
                       </p>
                     )}
+                    <div
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </div>
                   </div>
-                  <div className="mb-6">
+                  <div className="mb-6 relative">
                     <input
-                      type="password"
+                      type={showPasswordRepeat ? "text" : "password"}
                       className={`${
                         errors?.repeat_password?.type === "required" ||
                         errors?.repeat_password?.type === "minLength" ||
@@ -174,14 +185,25 @@ const LoginRegister = () => {
                         validate: true,
                       })}
                     />
+                    <div
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                      onClick={() => setShowPasswordRepeat(!showPasswordRepeat)}
+                    >
+                      {showPasswordRepeat ? <FaEyeSlash /> : <FaEye />}
+                    </div>
                   </div>
-
-                  <button
-                    type="submit"
-                    className=" flex justify-center items-center px-7 py-3 bg-gray-700 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-gray-600 hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full"
-                  >
-                    {loader?.register ? <Loader /> : "Register"}
-                  </button>
+                  {loader?.login ? (
+                    <button className="flex justify-center items-center px-7  bg-gray-700 text-white cursor-progress rounded shadow-md w-full">
+                      <Loader />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="flex justify-center items-center px-7 py-3 bg-gray-700 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-gray-600 hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full"
+                    >
+                      Register
+                    </button>
+                  )}
 
                   <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                     <p className="text-center font-semibold mx-4 mb-0">OR</p>
@@ -196,7 +218,7 @@ const LoginRegister = () => {
                 </form>
               </>
             ) : (
-              // Login page
+              // Login page stars from here
               <>
                 <p className="mb-6 text-3xl font-bold text-gray-700">Log in</p>
                 <form onSubmit={handleSubmit(LoginSubmit)} method="GET">
@@ -205,24 +227,30 @@ const LoginRegister = () => {
                       type="email"
                       className={`${
                         errors?.email?.type === "required" && "border-red-800"
-                      } form-control block w-full px-4 py-2 text-lg md:text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-500 focus:text-gray-700 focus:bg-white focus:outline-none`}
+                      } form-control block w-full px-4 py-2 text-lg md:text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:outline-none`}
                       placeholder="Email address"
                       {...register("email", { required: true })}
                     />
                   </div>
 
-                  <div className="mb-6">
+                  <div className="mb-6 relative">
                     <input
-                      type="password"
+                      type={showPasswordLogin ? "text" : "password"}
                       className={`${
                         errors?.password?.type === "required" &&
                         "border-red-800"
-                      } form-control block w-full px-4 py-2 text-lg md:text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-500 focus:text-gray-700 focus:bg-white focus:outline-none`}
+                      } form-control block w-full px-4 py-2 text-lg md:text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none`}
                       placeholder="Password"
                       {...register("password", {
                         required: true,
                       })}
                     />
+                    <div
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                      onClick={() => setShowPasswordLogin(!showPasswordLogin)}
+                    >
+                      {showPasswordLogin ? <FaEyeSlash /> : <FaEye />}
+                    </div>
                   </div>
 
                   <div className="flex justify-between items-center mb-6">
@@ -242,12 +270,18 @@ const LoginRegister = () => {
                       </label>
                     </div>
                   </div>
-                  <button
-                    type="submit"
-                    className="flex justify-center items-center px-7 py-3 bg-gray-700 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-gray-600 hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full"
-                  >
-                    {loader?.login ? <Loader /> : "Login"}
-                  </button>
+                  {loader?.login ? (
+                    <button className="flex justify-center items-center px-7  bg-gray-700 text-white cursor-progress rounded shadow-md w-full">
+                      <Loader />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="flex justify-center items-center px-7 py-3 bg-gray-700 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-gray-600 hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full"
+                    >
+                      Login
+                    </button>
+                  )}
 
                   <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                     <p className="text-center font-semibold mx-4 mb-0">OR</p>

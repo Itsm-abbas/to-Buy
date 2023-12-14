@@ -2,7 +2,7 @@ import Link from "next/link";
 import Rating from "@mui/material/Rating";
 import { useQuery } from "react-query";
 import { fetchReviewsAll } from "../utils/api";
-const ProductCard = ({ product, isLoading }) => {
+const ProductCard = ({ product }) => {
   // Fetching Reviews
   const {
     data: reviews,
