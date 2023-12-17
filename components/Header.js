@@ -83,13 +83,13 @@ function Nav() {
               <div className="flex-grow hidden md:block">
                 <SearchBar />
               </div>
-              {/* <div className="hidden md:flex">
+              <div className="hidden md:flex">
                 <Link href={"/wishList"} legacyBehavior>
                   <a className=" dark:hover:bg-white montserrat dark:hover:text-black  hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                     Wish List
                   </a>
                 </Link>
-              </div> */}
+              </div>
             </div>
             <div className=" flex items-center">
               <div className="md:flex items-center justify-center hidden">

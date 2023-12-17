@@ -86,9 +86,8 @@ const ViewProduct = ({ product }) => {
               </div>
               <p className="leading-relaxed">{desc}</p>
             </div>
-            {category == "Shirts" && (
+            {/* {category == "Shirts" && (
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                {/* Shirts */}
                 <div className="flex">
                   <span className="mr-3">Color</span>
                   <button className="border-2 border-gray-300 bg-blue-900 rounded-full w-6 h-6 focus:outline-none"></button>
@@ -96,16 +95,17 @@ const ViewProduct = ({ product }) => {
                   <button className="border-2 border-gray-300 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none"></button>
                 </div>
               </div>
-            )}
+            )} */}
+
             {/* Shoes */}
             {category == "Shoes" && (
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                <div className="flex">
+                {/* <div className="flex">
                   <span className="mr-3">Color</span>
                   <button className="border-2 border-gray-300 bg-blue-900 rounded-full w-6 h-6 focus:outline-none"></button>
                   <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
                   <button className="border-2 border-gray-300 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                </div>
+                </div> */}
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
@@ -177,6 +177,7 @@ const ViewProduct = ({ product }) => {
               >
                 Add to Cart
               </button>
+              {/* Adding to wishlist */}
               {InWishList ? (
                 <button
                   onClick={() => dispatch(RemoveFromWishlist(product_id))}

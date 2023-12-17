@@ -17,7 +17,14 @@ export default async function handler(req, res) {
         // Decrypt
         const passwordMatch = await compare(req.body.password, hashedPassword); //True or false
         if (passwordMatch) {
-          res.status(200).send(user);
+          res.status(200).json({
+            data: {
+              full_name: user[0]?.full_name,
+              id: user[0]?.id,
+              user_image: user[0]?.user_image,
+              created_at: user[0]?.created_at,
+            },
+          });
         } else {
           res
             .status(401)

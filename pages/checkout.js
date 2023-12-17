@@ -29,11 +29,9 @@ export default function App() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const onSubmit = (data) => {
-  //   axios.post("/api/checkout_session", data).then((res) => {
-  //     console.log(res.data);
-  //   });
-  // };
+  const onSubmit = (data) => {
+    axios.post("/api/checkout", data).then((res) => {});
+  };
   useEffect(() => {
     if (cart.length === 0) {
       router.replace("/cart");
@@ -62,7 +60,7 @@ export default function App() {
         <form
           action="/api/checkout_session"
           method="POST"
-          // onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col md:w-1/2 md:px-10 py-6"
         >
           <input
@@ -92,10 +90,6 @@ export default function App() {
             {...register("country", { required: true })}
           >
             <option value="Pakistan">Pakistan</option>
-            <option value="India,Bangladesh">India</option>
-            <option value="India,Bangladesh">Bangladesh</option>
-            <option value="Srilanka">Srilanka</option>
-            <option value="Afghanistan">Afghanistan</option>
           </select>
           {errors?.country?.type === "required" && (
             <p className=" flex items-center mb-3 text-red-500">
@@ -175,7 +169,9 @@ export default function App() {
               {show ? <FaChevronUp /> : <FaChevronDown />}
             </button>
             {!show && (
-              <p className="text-2xl text-gray-700 font-bold">${totalPrice}</p>
+              <p className="text-2xl text-gray-700 font-bold">
+                Rs. {totalPrice}
+              </p>
             )}
           </div>
           <div

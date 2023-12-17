@@ -68,7 +68,7 @@ const LoginRegister = () => {
           ...loader,
           login: true,
         });
-        dispatch(loginUser(res.data));
+        dispatch(loginUser(res.data.data));
       })
       .then(() => {
         setLoader({

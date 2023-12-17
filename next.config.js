@@ -6,14 +6,14 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-        // port: '',
-        // pathname: '/account123/**',
       },
       {
         protocol: "https",
         hostname: "m.media-amazon.com",
-        // port: '',
-        // pathname: '/account123/**',
+      },
+      {
+        protocol: "https",
+        hostname: "t4.ftcdn.net",
       },
     ],
   },

@@ -1,9 +1,11 @@
+//updateProfile
 import db from "../../config/db";
 import { compare, hashSync } from "bcryptjs";
 
 export default async function handler(req, res) {
   const connection = await db.getConnection();
-  const { id, full_name, password, change_password, avatar } = req.body;
+  const { id, full_name, password, change_password, user_image, address } =
+    req.body;
 
   if (req.method === "POST") {
     try {
@@ -27,17 +29,68 @@ export default async function handler(req, res) {
         return res.status(401).json({ message: "Invalid current password" });
       }
 
-      // Hash the new password
-      const hashedNewPassword = hashSync(change_password, 10);
+      // Prepare the parameters for the SQL query
+      const queryParameters = [];
 
-      // Update user's password and name
-      await connection.query(
-        "UPDATE users SET password = ?, full_name = ? WHERE id = ?",
-        [hashedNewPassword, full_name, id]
+      let updateQuery = "UPDATE users SET";
+
+      // Add full_name to the query if provided
+      if (
+        change_password !== null &&
+        change_password !== undefined &&
+        change_password !== ""
+      ) {
+        // Hash the new password
+        const hashedNewPassword = hashSync(change_password, 10);
+        updateQuery += " password = ?,";
+        queryParameters.push(hashedNewPassword);
+      }
+      if (full_name !== null && full_name !== undefined && full_name !== "") {
+        updateQuery += " full_name = ?,";
+        queryParameters.push(full_name);
+      }
+      if (address !== null && address !== undefined && address !== "") {
+        updateQuery += " address = ?,";
+        queryParameters.push(address);
+      }
+
+      // Add user_image to the query if provided
+      if (
+        user_image !== null &&
+        user_image !== undefined &&
+        user_image !== ""
+      ) {
+        updateQuery += " user_image = ?,";
+        queryParameters.push(user_image);
+      }
+      // Remove the trailing comma from the query
+      updateQuery = updateQuery.replace(/,$/, "");
+
+      // Add WHERE clause for user ID
+      if (queryParameters.length == 0) {
+        return res.status(402).json({
+          message: "You are not updating anything!",
+        });
+      }
+      queryParameters.push(id);
+      updateQuery += " WHERE id = ?";
+
+      await connection.query(updateQuery, queryParameters);
+      // Updated Result
+      const updatedResult = await connection.query(
+        "SELECT * FROM users WHERE id = ?",
+        [id]
       );
 
+      const updatedUser = updatedResult[0];
       res.status(200).json({
-        data: { full_name: full_name },
+        data: {
+          full_name: updatedUser[0].full_name,
+          id: updatedUser[0].id,
+          user_image: updatedUser[0].user_image,
+          address: updatedUser[0].address,
+          created_at: user[0]?.created_at,
+        },
         message: "Updated Successfully",
       });
     } catch (error) {
@@ -46,32 +99,3 @@ export default async function handler(req, res) {
     }
   }
 }
-
-// compare(password, user.password, (err, isMatch) => {
-//   if (err) {
-//     res.status(500).json({ error: err });
-//   }
-//   if (isMatch) {
-//     if (name) {
-//       user.name = name;
-//     }
-//     if (change_password) {
-//       user.password = hashSync(change_password, 10);
-//     }
-//     if (avatar) {
-//       user.avatar = avatar;
-//     }
-//     user.save();
-//     res.status(200).json({
-//       message: "Updated successfully",
-//       user,
-//     });
-//   } else {
-//     res.status(400).json({
-//       message: "Password is incorrect",
-//     });
-//   }
-// });
-// if (!user) {
-//   res.status(404).json({ message: "User not found" });
-// }

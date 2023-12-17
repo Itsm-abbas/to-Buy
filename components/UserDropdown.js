@@ -10,7 +10,7 @@ function classNames(...classes) {
 
 export default function DropDown() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.User.user[0]);
+  const user = useSelector((state) => state.User.user);
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
