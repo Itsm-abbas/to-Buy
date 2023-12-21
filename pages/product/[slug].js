@@ -8,6 +8,7 @@ import UserReviewProduct from "../../components/UserReviewProduct";
 import { fetchProducts, fetchReviewsAll } from "../../utils/api";
 import { useQuery } from "react-query";
 import Loader from "../../components/MainLoader";
+import InputReview from "../../components/InputReview";
 
 const Product = () => {
   const router = useRouter();
@@ -26,7 +27,6 @@ const Product = () => {
   } = useQuery("reviews", fetchReviewsAll);
 
   const product = products?.find((item) => item?.slug === slug);
-
   // Fetch related products
   const relatedProducts = products
     ?.filter((p) => p?.category === product?.category && p?.slug !== slug)
@@ -72,11 +72,16 @@ const Product = () => {
         <h2 className="text-2xl montserrat font-semibold mb-8">
           Customer Reviews
         </h2>
+        <InputReview
+          productId={product.product_id}
+          product_image={product.image}
+        />
         {loadingReviews ? (
           <Loader />
         ) : (
           <UserReviewProduct
             productId={product?.product_id}
+            product_image={product?.image}
             reviews={reviews}
           />
         )}

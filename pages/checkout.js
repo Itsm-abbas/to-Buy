@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiError } from "react-icons/bi";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import {
   FaArrowLeft,
   FaCartArrowDown,
@@ -16,7 +19,6 @@ export default function App() {
   const router = useRouter();
   const [show, setShow] = useState(true);
   const cart = useSelector((state) => state.Cart.cart);
-
   let totalPrice = cart.reduce((a, b) => {
     return a + b.qty * b.price;
   }, 0);
@@ -30,7 +32,21 @@ export default function App() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    axios.post("/api/checkout", data).then((res) => {});
+    // Merge cart data with other form data
+    const requestData = {
+      ...data,
+      cart,
+    };
+
+    axios
+      .post("/api/checkout", requestData)
+      .then((res) => {
+        toast.success("Your order is placed");
+        router.push(`/order-summary?orderId=${res.data.data[0].order_id}`);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
   };
   useEffect(() => {
     if (cart.length === 0) {
@@ -53,6 +69,14 @@ export default function App() {
   }
   return (
     <Layout title={"Checkout"}>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        limit={1}
+      />
       <div className="w-full flex justify-center items-center mb-8">
         <p className="text-3xl font-bold">Checkout</p>
       </div>

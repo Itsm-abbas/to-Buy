@@ -106,7 +106,10 @@ const Cart = () => {
                           {item.category.toUpperCase()}
                         </td>
                         <td className="px-4 md:px-6 py-4">
-                          {numberWithCommas(item.price)} Rs
+                          {numberWithCommas(
+                            item.newprice === null ? item.price : item.newprice
+                          )}{" "}
+                          Rs
                         </td>
                         <td className="px-4 md:px-6 py-4 ">
                           <div className="flex items-center">

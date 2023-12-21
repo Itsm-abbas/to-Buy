@@ -12,8 +12,17 @@ import { useQuery } from "react-query";
 import Rating from "@mui/material/Rating";
 import { ToastContainer } from "react-toastify";
 const ViewProduct = ({ product }) => {
-  const { product_id, image, title, price, brand, desc, category, newprice } =
-    product;
+  const {
+    product_id,
+    image,
+    title,
+    price,
+    brand,
+    desc,
+    category,
+    newprice,
+    created_at,
+  } = product;
   const dispatch = useDispatch();
   const WishList = useSelector((state) => state.Cart.wishList);
   const InWishList = WishList.some((item) => item.product_id === product_id);
@@ -56,19 +65,25 @@ const ViewProduct = ({ product }) => {
             alt="ecommerce"
             height={800}
             width={500}
-            className="lg:w-1/2 w-full lg:h-96 h-64 object-cover  rounded"
+            className="lg:w-1/2 w-full lg:h-96 h-64 object-contain  rounded"
             src={image}
             priority
             blurDataURL="blur"
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 flex flex-col justify-between">
             <div>
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                {brand}
-              </h2>
+              <div className="flex justify-between">
+                <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                  {brand}
+                </h2>
+                <p className="text-sm font-semibold text-gray-400 montserrat">
+                  {created_at?.split("T")[0]}
+                </p>
+              </div>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {title}
               </h1>
+
               <div className="flex mb-4">
                 <span className="flex items-center">
                   <span className="text-gray-600 flex items-center">

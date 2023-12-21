@@ -1,10 +1,11 @@
 import React from "react";
 import Rating from "@mui/material/Rating";
-import { format } from "date-fns";
-const Reviews = ({ productId, reviews }) => {
+
+const Reviews = ({ productId, product_image, reviews }) => {
   const productReviews = reviews?.filter(
     (review) => review.product_id === productId
   );
+
   return (
     <div>
       {productReviews?.length > 0 ? (
@@ -28,6 +29,7 @@ const Reviews = ({ productId, reviews }) => {
 
             return `${day}-${month}-${year}`;
           }
+
           return (
             <div
               className="flex opensans items-center mb-4 py-3 px-2 pl-5 rounded-sm bg-gray-100"
@@ -52,7 +54,7 @@ const Reviews = ({ productId, reviews }) => {
                     {/* Rating Stars */}
                     <Rating
                       size="small"
-                      value={stars}
+                      value={userReviewDetail.stars}
                       precision={0.1}
                       readOnly
                       className="mr-1"
@@ -66,7 +68,7 @@ const Reviews = ({ productId, reviews }) => {
           );
         })
       ) : (
-        <p>No reviews for this product yet.</p>
+        <p className="mb-10">No reviews for this product yet.</p>
       )}
     </div>
   );

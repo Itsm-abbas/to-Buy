@@ -1,7 +1,5 @@
-import Layout from "../../components/Layout"; // Import your layout component
-import Loader from "../../components/Loader";
+import Layout from "../../components/Layout";
 import ProductItem from "../../components/ProductItem";
-import axios from "axios";
 
 const SearchCategoryPage = ({ products, category }) => {
   const productsData = products.data;

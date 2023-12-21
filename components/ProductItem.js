@@ -41,7 +41,7 @@ const ProductItem = ({ product }) => {
             src={image}
             alt={title}
             layout="responsive"
-            className=" transition ease-linear duration-300 object-cover object-center w-full transform hover:scale-110"
+            className=" transition ease-linear duration-300 object-contain object-center w-full transform hover:scale-110"
           />
           <Link href={`/product/${slug}`} legacyBehavior>
             <button className="absolute bg-white left-2/4 transform translate-x-[-50%] translate-y-32 bottom-6  text-black mr-6 text-lg  px-8 py-1  rounded-sm  hover:text-white hover:bg-gray-800 group-hover:-translate-y-8 transition-all duration-300">
