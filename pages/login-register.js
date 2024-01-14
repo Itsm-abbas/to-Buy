@@ -211,9 +211,9 @@ const LoginRegister = () => {
                   <button
                     onClick={() => setRegister(false)}
                     type="submit"
-                    className="inline-block px-7 py-3 bg-gray-700 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-gray-600 hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full"
+                    className="inline-block px-7 py-3 font-medium text-sm leading-snug hover:text-blue-500 uppercase  transition duration-150 ease-in-out w-full text-blue-800 underline"
                   >
-                    Log in
+                    Already Account! Log in
                   </button>
                 </form>
               </>
@@ -253,23 +253,7 @@ const LoginRegister = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center mb-6">
-                    <div className="form-group form-validate flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="remember"
-                          type="checkbox"
-                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        />
-                      </div>
-                      <label
-                        htmlFor="remember"
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-500"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
+                  <div className="flex justify-between items-center mb-6"></div>
                   {loader?.login ? (
                     <button className="flex justify-center items-center px-7  bg-gray-700 text-white cursor-progress rounded shadow-md w-full">
                       <Loader />
@@ -289,9 +273,9 @@ const LoginRegister = () => {
                   <button
                     onClick={() => setRegister(true)}
                     type="submit"
-                    className="inline-block px-7 py-3 bg-gray-700 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-gray-600 hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full"
+                    className="inline-block px-7 py-3 font-medium text-sm leading-snug hover:text-blue-500 uppercase  transition duration-150 ease-in-out w-full text-blue-800 underline"
                   >
-                    Register
+                    Create new Account
                   </button>
                 </form>
               </>

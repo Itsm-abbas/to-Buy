@@ -73,8 +73,8 @@ const Product = () => {
           Customer Reviews
         </h2>
         <InputReview
-          productId={product.product_id}
-          product_image={product.image}
+          productId={product?.product_id}
+          product_image={product?.image}
         />
         {loadingReviews ? (
           <Loader />

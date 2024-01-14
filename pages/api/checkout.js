@@ -5,8 +5,8 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email, phone, country, name, address, city, postal_code, cart } =
       req.body;
-
     try {
+      // Connection with database
       const connection = await db.getConnection();
       // Insert data into the 'orders' table
       const result = await connection.query(

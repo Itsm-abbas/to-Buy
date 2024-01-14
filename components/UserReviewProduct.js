@@ -54,7 +54,7 @@ const Reviews = ({ productId, product_image, reviews }) => {
                     {/* Rating Stars */}
                     <Rating
                       size="small"
-                      value={userReviewDetail.stars}
+                      value={stars}
                       precision={0.1}
                       readOnly
                       className="mr-1"

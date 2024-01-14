@@ -10,22 +10,26 @@ const InputReview = ({ productId, product_image }) => {
     user_location: "",
     user_comment: "",
     stars: 0,
-    product_id: productId,
-    product_image,
   });
 
   const handleChange = (event) => {
-    setUserReviewDetail({
-      ...userReviewDetail,
+    setUserReviewDetail((prevUserReviewDetail) => ({
+      ...prevUserReviewDetail,
       [event.target.name]: event.target.value,
-    });
+    }));
   };
 
   const handleSubmitReview = async (event) => {
-    event.preventDefault();
-    console.log(userReviewDetail);
     try {
-      const response = await axios.post("/api/addreview", userReviewDetail);
+      const response = await axios.post("/api/addreview", {
+        user_name: userReviewDetail.user_name,
+        user_location: userReviewDetail.user_location,
+        user_comment: userReviewDetail.user_comment,
+        stars: userReviewDetail.stars,
+        productId,
+        product_image,
+      });
+
       toast.success(response.data.message);
       setUserReviewDetail({
         user_name: "",
@@ -36,6 +40,7 @@ const InputReview = ({ productId, product_image }) => {
     } catch (error) {
       console.error("Error submitting review:", error);
     }
+    event.preventDefault();
   };
   return (
     <div>

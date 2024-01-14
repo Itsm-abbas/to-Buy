@@ -14,19 +14,19 @@ export default async function handler(req, res) {
 
       // Connect to the MySQL database
       console.log(req.body);
-      //   const connection = await db.getConnection();
-      //   // Insert the review into the 'reviews' table
-      //   const result = await connection.query(
-      //     "INSERT INTO reviews (product_id,user_name, user_location, user_comment, stars, product_image) VALUES (?, ?, ?, ?, ?, ?)",
-      //     [
-      //       productId,
-      //       user_name,
-      //       user_location,
-      //       user_comment,
-      //       stars,
-      //       product_image,
-      //     ]
-      //   );
+      const connection = await db.getConnection();
+      // Insert the review into the 'reviews' table
+      const result = await connection.query(
+        "INSERT INTO reviews (product_id,user_name, user_location, user_comment, stars, product_image) VALUES (?, ?, ?, ?, ?, ?)",
+        [
+          productId,
+          user_name,
+          user_location,
+          user_comment,
+          stars,
+          product_image,
+        ]
+      );
 
       res.status(201).json({ message: "Review added successfully" });
     } catch (error) {
